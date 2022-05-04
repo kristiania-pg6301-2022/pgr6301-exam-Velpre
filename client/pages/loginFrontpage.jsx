@@ -90,7 +90,7 @@ export function LoginCallback({ reload, config }) {
             const { access_token } = await res.json();
             await registerLogin(provider, { access_token });
             reload();
-            navigate("/front-db");
+            navigate("/editor");
             return;
         }
 
@@ -101,7 +101,7 @@ export function LoginCallback({ reload, config }) {
 
         await registerLogin(provider, { access_token });
         reload();
-        navigate("/front-db");
+        navigate("/user");
     }, []);
 
     if (error) {
@@ -122,12 +122,12 @@ function StartLogin({ config }) {
         <div>
             <h1>Login</h1>
             <LoginButton
-                label={"Login with Google"}
+                label={"User Login"}
                 config={config}
                 provider={"google"}
             />
             <LoginButton
-                label={"Login with ID-porten"}
+                label={"Editor Login"}
                 config={config}
                 provider={"hk"}
             />

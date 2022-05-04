@@ -1,53 +1,57 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import "./app.css";
 import { ApplicationContext } from "./applicationContext";
-import { useLoading } from "./useLoading";
+import { useLoading } from "./lib/useLoading";
 import {BrowserRouter, Link, useNavigate, Route, Routes} from "react-router-dom";
-import { Login, LoginCallback } from "./login";
-import { FrontPage } from "./frontPage";
+import {LoginCallback } from "./pages/loginFrontpage";
+import { FrontPage } from "./pages/frontPage";
 
 import { LoginFrontPage } from "./pages/loginFrontpage";
+import {Profile} from "./pages/profile";
 
 
-function UserActions({ user }) {
+
+function LoginActions({ user,logout, reload }) {
+    const navigate = useNavigate();
     if (!user || Object.keys(user).length === 0) {
-        return <Link to={"/login"}>Login</Link>;
+        return <button onClick={()=>navigateLogin()}>Login</button>;
+    }
+
+    function navigateProfile(){
+        navigate("/profile")
+    }
+
+    function navigateLogin(){
+        navigate("/login")
     }
 
     return (
         <>
-            <Link to={"/profile"}>
-                {user.google?.name ? `Profile for ${user.google.name}` : "Profile"}
-            </Link>
-            <Link to={"/login/endsession"}>Log out</Link>
+            <button onClick={() => navigateProfile()}>{user.google?.name ? `User profile` : `Editor profile`}</button>
+            <button onClick={async () => await logout("/api/login", reload, navigate)}>Log ut</button>
         </>
     );
 }
 
-//SKAL RENDRE RIKTIG USER INTERFACE
-function CheckUser({user}){
-    const navigate = useNavigate();
+function User(user) {
+    return <>
+        {user.user.google ? <h1>Logget User</h1> : <h1>Ulogget user</h1>}
 
-    console.log(user)
-    if (user.google){
-        //navigate("/googleInterface")
-        return <h1>Hello Google</h1>
-    }
-    if(user.hk){
-        //navigate("/hkInterface")
-    }
+    </>
 
-    if(user.google == undefined || user.hk == undefined){
+}
 
-        navigate("/login")
-        return null;
-    }
+function Editor(user) {
+    return <>
+        {user.user.hk ? <h1>Logget Editor</h1> : <h1>Ulogget editor</h1>}
+
+    </>
 }
 
 export function Application() {
 
     //Server
-    const { fetchLogin } = useContext(ApplicationContext);
+    const { fetchLogin, logout} = useContext(ApplicationContext);
     const { data, error, loading, reload } = useLoading(fetchLogin);
 
     if (error) {
@@ -61,12 +65,12 @@ export function Application() {
         <BrowserRouter>
             <header>
                 <Link to={"/"}>Front page</Link>
-                <UserActions user={data?.user} />
+                <LoginActions user={data?.user} logout={logout} reload={reload} />
             </header>
 
 
             <Routes>
-                <Route path={"/"} element={<FrontPage />} /> //SKAL LISTE AUTOMATISK
+                <Route path={"/"} element={<FrontPage />} /> //SKAL LISTE titler automatisk
                 <Route
                     path={"/login/*"}
                     element={<LoginFrontPage config={data.config} reload={reload} />}
@@ -76,15 +80,13 @@ export function Application() {
                     element={<LoginCallback config={data.config} reload={reload} />}
                 />
 
+                <Route path={"/profile"} element={<Profile user={data?.user} reload={reload} logout={logout}/>} />
+
+                <Route path={"/user"} element={<User user={data?.user}/>} />
+                <Route path={"/editor"} element={<Editor user={data?.user}/>} />
+
             </Routes>
         </BrowserRouter>
 
     );
 }
-
-/* VENTER MED DENNE
-     <Route
-                    path={"/meny"}
-                    element={<CheckUser user={data?.user} />}
-                />
- */

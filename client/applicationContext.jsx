@@ -1,6 +1,5 @@
 import React from "react";
-import { fetchJSON } from "./http";
-import { useNavigate } from "react-router-dom";
+import { fetchJSON } from "./lib/http";
 
 async function postJSON(url, object) {
   const res = await fetch(url, {

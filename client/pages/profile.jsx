@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
-import { ApplicationContext } from "./applicationContext";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export function Profile({ user, reload }) {
-  const { logout } = useContext(ApplicationContext);
+export function Profile({ user, reload, logout }) {
+
   const navigate = useNavigate();
 
   async function handleLogout() {
