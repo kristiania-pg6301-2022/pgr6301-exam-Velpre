@@ -1,0 +1,12 @@
+
+body {
+    margin: 0;
+}
+
+header {
+    background-color: lightblue;
+    padding: 1.5%;
+    display: flex;
+    justify-content: space-between;
+}
+
