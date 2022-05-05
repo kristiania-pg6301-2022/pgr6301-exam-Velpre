@@ -1,12 +1,82 @@
 
 body {
     margin: 0;
+    height: 100vh;
+    overflow: hidden;
 }
-
 header {
     background-color: lightblue;
     padding: 1.5%;
     display: flex;
     justify-content: space-between;
+    border-bottom: 10px solid black;
+}
+
+.front-page{
+    display: flex;
+    background-color: lightblue;
+    height: 100vh
+}
+
+.box1{
+    padding: 5%;
+    width: 40vh;
+    border-right: 10px solid black;
+    text-align: center;
+}
+.titles{
+    display: flex;
+    flex-direction: column;
+}
+.titles button{
+    margin: 1%;
+    background-color: beige;
+}
+
+.box2{
+    padding: 5%;
+    width: 60vh;
+}
+
+.login-frontpage{
+    background-color: lightblue;
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.login-frontpage h1{
+    margin: 0;
+
+}
+
+.login-frontpage button{
+    width: 400px;
+    height: 100px;
+    background-color: beige;
+}
+
+.btn{
+    background-color: beige;
+    width: 100px;
+    height: 30px;
+}
+
+.profile{
+    background-color: lightblue;
+    height: 100vh;
+    text-align: center;
+    padding-top: 5%;
+}
+.profile h1{
+    margin: 0;
+    margin-bottom: 5%;
+}
+
+.profile button{
+    margin-top: 5%;
 }
 

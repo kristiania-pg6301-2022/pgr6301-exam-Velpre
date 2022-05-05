@@ -10,7 +10,7 @@ export function Profile({ user, reload, logout }) {
   }
 
   return (
-    <div>
+    <div className="profile">
       {user.google ? (
         <div>
           <h1>
@@ -27,7 +27,7 @@ export function Profile({ user, reload, logout }) {
         </h1>
       )}
       <div>
-        <button onClick={handleLogout}>Log out</button>
+        <button className="btn" onClick={handleLogout}>Log out</button>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import {Route, Routes, useNavigate, useParams} from "react-router-dom";
 import { ApplicationContext } from "../applicationContext";
 
-function LoginButton({ config, label, provider }) {
+export function LoginButton({ config, label, provider }) {
     async function handleLogin() {
         const {
             authorization_endpoint,
@@ -116,10 +116,9 @@ export function LoginCallback({ reload, config }) {
     return <h1>Please wait...</h1>;
 }
 
-
-function StartLogin({ config }) {
+export function StartLogin({ config }) {
     return (
-        <div>
+        <div className="login-frontpage">
             <h1>Login</h1>
             <LoginButton
                 label={"User Login"}
@@ -148,4 +147,3 @@ export function LoginFrontPage({ config, reload }) {
     );
 }
 
-//<Route path={"/endsession"} element={<EndSession reload={reload} />} /> - TRENGER VI DENNE

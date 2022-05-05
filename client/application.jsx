@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
-import "./app.css";
+//import "./app.css";
 import { ApplicationContext } from "./applicationContext";
 import { useLoading } from "./lib/useLoading";
 import {BrowserRouter, Link, useNavigate, Route, Routes} from "react-router-dom";
 import {LoginCallback } from "./pages/loginFrontpage";
-import {ListArticleTitles} from "./listArticles";
-
 import { LoginFrontPage } from "./pages/loginFrontpage";
 import {Profile} from "./pages/profile";
 import {FrontPage} from "./frontPage";
@@ -15,7 +13,7 @@ import {FrontPage} from "./frontPage";
 function LoginActions({ user,logout, reload }) {
     const navigate = useNavigate();
     if (!user || Object.keys(user).length === 0) {
-        return <button onClick={()=>navigateLogin()}>Login</button>;
+        return <button className="btn" onClick={()=>navigateLogin()}>Login</button>;
     }
 
     function navigateProfile(){
@@ -28,15 +26,14 @@ function LoginActions({ user,logout, reload }) {
 
     return (
         <>
-            <button onClick={() => navigateProfile()}>{user.google?.name ? `User profile` : `Editor profile`}</button>
-            <button onClick={async () => await logout("/api/login", reload, navigate)}>Log ut</button>
+            <button className="btn" onClick={() => navigateProfile()}>{user.google?.name ? `User profile` : `Editor profile`}</button>
+            <button className="btn" onClick={async () => await logout("/api/login", reload, navigate)}>Log ut</button>
         </>
     );
 }
 
 
 export function Application() {
-
     //Server
     const { fetchLogin, logout} = useContext(ApplicationContext);
     const { data, error, loading, reload } = useLoading(fetchLogin);
@@ -50,35 +47,30 @@ export function Application() {
 
     return (
         <BrowserRouter>
-            <header>
-                <Link to={"/"}>Front page</Link>
-                <LoginActions user={data?.user} logout={logout} reload={reload} />
-            </header>
+
+                <header>
+                    <Link to={"/"}>Front page</Link>
+                    <LoginActions user={data?.user} logout={logout} reload={reload} />
+                </header>
 
 
-            <Routes>
-                <Route path={"/"} element={<FrontPage user={data.user} reload={reload} />} />
-                <Route
-                    path={"/login/*"}
-                    element={<LoginFrontPage config={data.config} reload={reload} />}
-                />
-                <Route
-                    path={"/login/:provider/callback"}
-                    element={<LoginCallback config={data.config} reload={reload} />}
-                />
+                <Routes>
+                    <Route path={"/"} element={<FrontPage user={data.user} reload={reload} />} />
+                    <Route
+                        path={"/login/*"}
+                        element={<LoginFrontPage config={data.config} reload={reload} />}
+                    />
+                    <Route
+                        path={"/login/:provider/callback"}
+                        element={<LoginCallback config={data.config} reload={reload} />}
+                    />
 
-                <Route path={"/profile"} element={<Profile user={data?.user} reload={reload} logout={logout}/>} />
+                    <Route path={"/profile"} element={<Profile user={data?.user} reload={reload} logout={logout}/>} />
 
 
-            </Routes>
+                </Routes>
+
         </BrowserRouter>
 
     );
 }
-
-/*
-<Route path={"/user"} element={<User user={data?.user}/>} />
-<Route path={"/editor"} element={<Editor user={data?.user}/>} />
-
-
- */

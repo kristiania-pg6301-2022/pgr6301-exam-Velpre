@@ -1,18 +1,7 @@
 import React from "react";
-import { fetchJSON } from "./lib/http";
+import { fetchJSON, postJSON } from "./lib/http";
 
-async function postJSON(url, object) {
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(object),
-  });
-  if (!res.ok) {
-    throw new Error(`Failed to post ${res.status}: ${res.statusText}`);
-  }
-}
+
 
 export const ApplicationContext = React.createContext({
   async fetchLogin() {

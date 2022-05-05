@@ -1,22 +1,20 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { useLoading } from "./lib/useLoading";
-import React, { useContext } from "react";
 import { ApplicationContext } from "./applicationContext";
-import {useNavigate} from "react-router-dom";
+
 
 export function FrontPage({user, reload}) {
     return (
-        <div>
+        <div className="front-page">
             <ListArticleTitles reload={reload} user={user} />
             {user.google && <User/>}
-            {user.hk && <Editor></Editor>}
+            {user.hk && <Editor/>}
         </div>
     );
 }
 
-function ListArticleTitles({user, reload}) {
+export function ListArticleTitles({user, reload}) {
     const { listArticles } = useContext(ApplicationContext);
-    const {chosenArticle, setChosenArticle} = useState();
 
     const { loading, error, data } = useLoading(async () => listArticles());
 
@@ -27,35 +25,23 @@ function ListArticleTitles({user, reload}) {
         return (
             <div>
                 <h1>Error</h1>
-                <div id="error-text">{error.toString()}</div>
+                <div>{error.toString()}</div>
             </div>
         );
     }
-    function showWholeArticle (article){
-        reload()
-        console.log(article)
-        console.log(user)
-        if(user){
-            return(<>
-                <h1>{article.title}</h1>
-                <h1>{article.plot}</h1>
-                <h1>{article.category}</h1>
-            </>)
-        }
-    }
 
     return (
-        <div>
+        <div className="box1">
             <h1>Our Articles</h1>
             <p>(Log in to read)</p>
-
-            {data.map((article, index) => (
-                <button onClick={()=>showWholeArticle(article)} key={index}> {article.title}</button>
-            ))}
+            <div className="titles">
+                {data.map((article, index) => (
+                    <button key={index}> {article.title}</button>
+                ))}
+            </div>
         </div>
     );
 }
-
 
 
 function User(user) {
@@ -63,7 +49,7 @@ function User(user) {
 
 return (
 
-    <h1>"test"</h1>
+    <h1 className="box2" >"test"</h1>
 )
 
 }
@@ -79,15 +65,17 @@ export function Editor() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        await createArticle({title, category, plot});
+        const res = await createArticle({title, category, plot});
+        console.log(res)
 
         setTitle("");
         setCategory("");
         setPlot("");
     }
 
+
     return (
-        <form onSubmit={handleSubmit}>
+        <form  className="box2" onSubmit={handleSubmit}>
             <h1>Add Article</h1>
             <div>
                 <label>
@@ -118,7 +106,7 @@ export function Editor() {
                 </label>
             </div>
 
-            <button>Submit</button>
+            <button >Submit</button>
         </form>
     );
 }
