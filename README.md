@@ -25,9 +25,25 @@ Dette er versjonene vi brukte under forelesningene om som er validert som ok:
 
 ## Egenutfylling av funksjonelle krav
 
-* [ ] *legg inn krav fra eksamentekst*
-* [ ] *
-* [ ] 
+* [x] * Anonyme brukere skal se nyhetsaker når de kommer til nettsiden. Legg inn noen nyhetssaker for å demonstrere
+* [x] * Når en ny sak publiseres, skal alle brukerne få se den nye saken umiddelbart. Bruk websockets for å sende oppdateringer
+ * [x] *Brukere kan logge seg inn. Det anbefales at du implementerer at brukerne logger seg inn med Google, men andre
+mekanismer er også akseptabelt
+* [x] * En bruker som er logget inn kan se på sin profilside (userinfo fra Google)
+* [x] * Brukere skal forbli logget inn når de refresher websiden
+* [x] * En bruker som er logget inn kan klikke på en nyhetssak for å se detaljene om nyhetssaken. Detaljene skal inkludere en
+nyhetskategori, overskrift, tekst og navn på den som publiserte den
+ * [x] *"Redaksjonelle brukere" kan logge seg inn med dActive Directory. Det må fungere å logge seg inn med en Active Directory
+på skolens AD ( domain_hint=egms.no )
+* [x] * Redaksjonelle brukere kan publisere nye nyhetsartikler
+* [x] * Nyhetsartikkel skal inneholde en kategori valgt fra en nedtrekksliste ( <select> ), tittel ( <input> ) og tekst ( <textarea> )
+* [x] * Dersom noen allerede har publisert en nyhetsartikkel med samme tittel skal serveren sende HTTP status kode 400 og en
+feilmelding
+   * Logfører dette på clienten i konsollen. Det er bug i browseren og selv om article ikke blir lagt til i DB dukker den opp på nettsiden på grunn av at websocket registrerer den feil. Når siden refreshes ser man at article ikke ble lagt inn i DB. 
+* [x] * Brukeren skal forhindres fra å sende inn en nyhetsartikkel som mangler kategori, tittel eller tekst
+* [x] * En redaksjonell bruker skal kunne redigere en artikkel de selv har publisert
+   * Dette har jeg ikke rukket. Ser for meg at det kunne enkelt løses ved å sammenligne user.hk.name med author på article. Kunne mappe over articles som ble publisert av den useren som er logget inn og liste bare de articles som matcher søke sånn at brukeren får mulighet å bare endre de articles som han selv har publisert.
+* [x] * Alle feil fra serves skal presenteres til bruker på en pen måte, med mulighet for brukeren til å prøve igjen
 
 
 ## Egenutfylling av tekniske krav
