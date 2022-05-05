@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Profile compoent Render users 1`] = `"<div class=\\"profile\\"><h1>Profile</h1><div><h1>User profile: V P (sajmon.vp@gmail.com)</h1><img src=\\"https://lh3.googleusercontent.com/a/AATXAJzKiTXm2d-4PFX3RwEkS6MBhjOGZNv4PBwEQ3G-=s96-c\\" alt=\\"V P profile picture\\"></div><div><button class=\\"btn\\">Log out</button></div></div>"`;

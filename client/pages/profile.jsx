@@ -11,6 +11,7 @@ export function Profile({ user, reload, logout }) {
 
   return (
     <div className="profile">
+        <h1>Profile</h1>
       {user.google ? (
         <div>
           <h1>

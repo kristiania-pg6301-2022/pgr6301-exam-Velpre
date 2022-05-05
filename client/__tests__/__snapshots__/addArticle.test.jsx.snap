@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add article shows article form 1`] = `"<form><h1>Add Article</h1><div><label><div><strong>Category:</strong></div><select required=\\"\\"><option value=\\"General\\">General</option><option value=\\"Local\\">Local</option><option value=\\"Aboard\\">Aboard</option></select></label></div><div><label><div><strong>Title:</strong></div><input required=\\"\\" value=\\"\\"></label></div><div><label><div><strong>Plot:</strong></div><textarea required=\\"\\"></textarea></label></div><button>Submit</button></form>"`;

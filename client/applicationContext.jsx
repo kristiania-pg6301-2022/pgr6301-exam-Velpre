@@ -1,8 +1,6 @@
 import React from "react";
 import { fetchJSON, postJSON } from "./lib/http";
 
-
-
 export const ApplicationContext = React.createContext({
   async fetchLogin() {
     return await fetchJSON("/api/login");
@@ -18,8 +16,6 @@ export const ApplicationContext = React.createContext({
   async createArticle(article) {
     return await postJSON("/api/articles/new", article);
   },
-
-
 
   async logout(url, reload, navigate) {
     await fetch(url, { method: "delete" });

@@ -2,7 +2,7 @@
 body {
     margin: 0;
     height: 100vh;
-    overflow: hidden;
+    background-color: lightblue;
 }
 header {
     background-color: lightblue;
@@ -12,30 +12,29 @@ header {
     border-bottom: 10px solid black;
 }
 
-.front-page{
+.front-page-editor{
+    margin-top: 10%;
     display: flex;
-    background-color: lightblue;
-    height: 100vh
+    justify-content: space-around;
 }
 
-.box1{
-    padding: 5%;
-    width: 40vh;
-    border-right: 10px solid black;
+.list-articles-frontpage-loged h1{
     text-align: center;
 }
-.titles{
-    display: flex;
-    flex-direction: column;
+.list-articles-frontpage{
+    text-align: center;
 }
-.titles button{
-    margin: 1%;
-    background-color: beige;
+.grid-split-frontpage{
+    display: flex;
+    justify-content: space-around;
+    background-color: lightblue;
+    margin-top: 10%;
 }
 
-.box2{
-    padding: 5%;
-    width: 60vh;
+.grid-split-frontpage button{
+    margin: 5%;
+    width: 100%;
+    background-color: beige;
 }
 
 .login-frontpage{
