@@ -4,10 +4,11 @@ import { ApplicationContext } from "./applicationContext";
 import { useLoading } from "./lib/useLoading";
 import {BrowserRouter, Link, useNavigate, Route, Routes} from "react-router-dom";
 import {LoginCallback } from "./pages/loginFrontpage";
-import { FrontPage } from "./pages/frontPage";
+import {ListArticleTitles} from "./listArticles";
 
 import { LoginFrontPage } from "./pages/loginFrontpage";
 import {Profile} from "./pages/profile";
+import {FrontPage} from "./frontPage";
 
 
 
@@ -33,20 +34,6 @@ function LoginActions({ user,logout, reload }) {
     );
 }
 
-function User(user) {
-    return <>
-        {user.user.google ? <h1>Logget User</h1> : <h1>Ulogget user</h1>}
-
-    </>
-
-}
-
-function Editor(user) {
-    return <>
-        {user.user.hk ? <h1>Logget Editor</h1> : <h1>Ulogget editor</h1>}
-
-    </>
-}
 
 export function Application() {
 
@@ -70,7 +57,7 @@ export function Application() {
 
 
             <Routes>
-                <Route path={"/"} element={<FrontPage />} /> //SKAL LISTE titler automatisk
+                <Route path={"/"} element={<FrontPage user={data.user} reload={reload} />} />
                 <Route
                     path={"/login/*"}
                     element={<LoginFrontPage config={data.config} reload={reload} />}
@@ -82,11 +69,16 @@ export function Application() {
 
                 <Route path={"/profile"} element={<Profile user={data?.user} reload={reload} logout={logout}/>} />
 
-                <Route path={"/user"} element={<User user={data?.user}/>} />
-                <Route path={"/editor"} element={<Editor user={data?.user}/>} />
 
             </Routes>
         </BrowserRouter>
 
     );
 }
+
+/*
+<Route path={"/user"} element={<User user={data?.user}/>} />
+<Route path={"/editor"} element={<Editor user={data?.user}/>} />
+
+
+ */

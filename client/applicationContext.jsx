@@ -22,15 +22,15 @@ export const ApplicationContext = React.createContext({
   async registerLogin(provider, login) {
     return await postJSON(`/api/login/${provider}`, login);
   },
-  /*
-  async listMovies() {
-    return fetchJSON(`/api/movies`);
-  },
-  async createMovie(movie) {
-    return await postJSON("/api/movies/new", movie);
+  async listArticles() {
+    return fetchJSON(`/api/articles`);
   },
 
-   */
+  async createArticle(article) {
+    return await postJSON("/api/articles/new", article);
+  },
+
+
 
   async logout(url, reload, navigate) {
     await fetch(url, { method: "delete" });

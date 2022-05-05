@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { LoginApi } from "./loginApi.js";
+import { ArticlesApi } from "./articlesApi.js";
 import { WebSocketServer } from "ws";
 
 dotenv.config();
@@ -12,6 +13,14 @@ dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
+
+const mongoClient = new MongoClient(process.env.MONGODB_URL);
+mongoClient.connect().then(async () => {
+    app.use(
+        "/api/articles",
+        ArticlesApi(mongoClient.db(process.env.MONGODB_DATABASE || "MyTest"))
+    );
+});
 
 
 app.use("/api/login", LoginApi());

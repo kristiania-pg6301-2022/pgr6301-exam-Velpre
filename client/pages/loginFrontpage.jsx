@@ -90,7 +90,7 @@ export function LoginCallback({ reload, config }) {
             const { access_token } = await res.json();
             await registerLogin(provider, { access_token });
             reload();
-            navigate("/editor");
+            navigate("/");
             return;
         }
 
@@ -101,7 +101,7 @@ export function LoginCallback({ reload, config }) {
 
         await registerLogin(provider, { access_token });
         reload();
-        navigate("/user");
+        navigate("/");
     }, []);
 
     if (error) {
