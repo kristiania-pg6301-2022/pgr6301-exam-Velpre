@@ -33,5 +33,41 @@ export function ArticlesApi(mongoDatabase) {
     }
   });
 
+  router.post("/delete", async (req, res) => {
+    const { title } = req.body;
+
+    const query = { title: title };
+    mongoDatabase.collection("articel").deleteOne(query)
+        .then(result => console.log(`Deleted ${result.deletedCount} item.`))
+        .catch(err => console.error(`Delete failed with error: ${err}`))
+});
+
+  router.post("/update", async (req, res) => {
+    const { category, title, author } = req.body;
+    const query = { title: title };
+
+    const update = {
+      "$push": {
+        "title": {
+          "title": title
+        }
+      }
+    };
+
+    const options = { "upsert": false };
+
+    mongoDatabase.collection("articel").updateOne(query, update, options)
+        .then(result => {
+          const { matchedCount, modifiedCount } = result;
+          if(matchedCount && modifiedCount) {
+            console.log(`Successfully added a new review.`)
+          }
+        })
+        .catch(err => console.error(`Failed to add review: ${err}`))
+
+  });
+
+
+
   return router;
 }

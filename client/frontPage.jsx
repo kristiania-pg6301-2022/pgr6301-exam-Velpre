@@ -10,6 +10,7 @@ export function FrontPage({ user, reload }) {
         <div className="front-page-editor">
           <EditorAdd />
           <EditorUpdate />
+          <EditorDelete />
         </div>
       )}
     </div>
@@ -88,6 +89,7 @@ export function EditorAdd() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    console.log(category)
     createArticle({ title, category, plot });
     setTitle("");
     setCategory("");
@@ -139,18 +141,59 @@ export function EditorAdd() {
   );
 }
 
+function EditorDelete() {
+  const { deleteArticle, listArticles } = useContext(ApplicationContext);
+  const { loading, error, data } = useLoading(async () => listArticles(), []);
+  const [title, setTitle] = useState("");
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return (
+        <div>
+          <h1>Error</h1>
+          <div id="error-text">{error.toString()}</div>
+        </div>
+    );
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    deleteArticle({ title});
+    setTitle("");
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h1>Delete Article</h1>
+      <div>
+        <label>
+            <strong>Delete Article:</strong>
+          <select required onChange={(e) => setTitle(e.target.value)}>
+            {data.map((article, index) => (
+                  <option key={index} value={article.title}>{article.title}</option>
+            ))
+            }
+          </select>
+        </label>
+      </div>
+      <button>Delete</button>
+    </form>
+  );
+}
+
 function EditorUpdate() {
-  const { createArticle } = useContext(ApplicationContext);
+  const { updateArticle } = useContext(ApplicationContext);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [plot, setPlot] = useState("");
 
-  //const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const res = await createArticle({ title, category, plot });
-    console.log(res);
+    updateArticle({ title, category, plot });
 
     setTitle("");
     setCategory("");
@@ -158,46 +201,46 @@ function EditorUpdate() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Add Article</h1>
-      <div>
-        <label>
-          <div>
-            <strong>Category:</strong>
-          </div>
-          <select required onChange={(e) => setCategory(e.target.value)}>
-            <option value={"General"}>General</option>
-            <option value={"Local"}>Local</option>
-            <option value={"Aboard"}>Aboard</option>
-          </select>
-        </label>
-      </div>
-      <div>
-        <label>
-          <div>
-            <strong>Title:</strong>
-          </div>
-          <input
-            required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          <div>
-            <strong>Plot:</strong>
-          </div>
-          <textarea
-            required
-            value={plot}
-            onChange={(e) => setPlot(e.target.value)}
-          />
-        </label>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <h1>Add Article</h1>
+        <div>
+          <label>
+            <div>
+              <strong>Category:</strong>
+            </div>
+            <select required onChange={(e) => setCategory(e.target.value)}>
+              <option value={"General"}>General</option>
+              <option value={"Local"}>Local</option>
+              <option value={"Aboard"}>Aboard</option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>
+            <div>
+              <strong>Title:</strong>
+            </div>
+            <input
+                required
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            <div>
+              <strong>Plot:</strong>
+            </div>
+            <textarea
+                required
+                value={plot}
+                onChange={(e) => setPlot(e.target.value)}
+            />
+          </label>
+        </div>
 
-      <button>Submit</button>
-    </form>
+        <button>Submit</button>
+      </form>
   );
 }
