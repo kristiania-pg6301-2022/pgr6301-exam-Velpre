@@ -26,9 +26,9 @@ Dette er versjonene vi brukte under forelesningene om som er validert som ok:
 ## Egenutfylling av funksjonelle krav
 
 * [ ] *legg inn krav fra eksamentekst*
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] *legg inn krav fra eksamentekst*
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
+* [ ] *
+* [ ] 
+
 
 ## Egenutfylling av tekniske krav
 
