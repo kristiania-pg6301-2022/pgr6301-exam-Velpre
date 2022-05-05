@@ -32,22 +32,16 @@ Dette er versjonene vi brukte under forelesningene om som er validert som ok:
 
 ## Egenutfylling av tekniske krav
 
-* [ ] Oppsett av package.json, parcel, express, prettier
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] React Router
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] Express app
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] Kommunikasjon mellom frontend (React) og backend (Express)
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] Deployment til Heroku
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] Bruk av MongoDB
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] OpenID Connect
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] Web Sockets
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] Jest med dokumentert testdekning
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
+* [x] Oppsett av package.json, parcel, express, prettier
+* [x] React Router
+* [x] Express app
+* [x] Kommunikasjon mellom frontend (React) og backend (Express)
+* [x] Deployment til Heroku
+* [x] Bruk av MongoDB
+* [x] OpenID Connect
+* [x] Web Sockets
+    * websockets fungerer men i forbindelse med å legge til article som har samme titel som en article som allerede finnes, registrerer websocket endring selv om 
+     det ikke legges article i DB. Når browseren refreshes ser man at filmen ikke blir lagt til, og websockets registreringen blir fjernet
+* [x] Jest med dokumentert testdekning
+  * det ble for lite tid på slutten for å kunne rekke flere tester. Hadde nok klart å teste update og delite på serveren og også skrive flere tester for clienten men det ble for lite tid
  
