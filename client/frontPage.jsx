@@ -84,7 +84,6 @@ function ArticleCard({ article }) {
       <h1>{article.title}</h1>
       <p>Category: {article.category}</p>
       <p>Plot: {article.plot}</p>
-        <p>Author: {article.author}</p>
     </div>
   );
 }
