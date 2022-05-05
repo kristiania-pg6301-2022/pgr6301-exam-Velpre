@@ -19,10 +19,11 @@ describe("add article", () => {
 
   it("adds Articles on submit", () => {
     const createArticle = jest.fn();
+    const handleNewArticle = jest.fn();
     const element = document.createElement("div");
     ReactDOM.render(
-      <ApplicationContext.Provider value={{ createArticle }}>
-        <EditorAdd />
+      <ApplicationContext.Provider value={{ createArticle, handleNewArticle}}>
+        <EditorAdd handleNewArticle={handleNewArticle}/>
       </ApplicationContext.Provider>,
       element
     );

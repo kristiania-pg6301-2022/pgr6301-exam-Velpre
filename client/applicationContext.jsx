@@ -20,12 +20,15 @@ export const ApplicationContext = React.createContext({
   async deleteArticle(article) {
     return await postJSON("/api/articles/delete", article);
   },
+
+
   /*
   async updateArticle(article) {
     return await postJSON("/api/articles/update", article);
   },
 
    */
+
 
   async logout(url, reload, navigate) {
     await fetch(url, { method: "delete" });
