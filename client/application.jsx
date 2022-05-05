@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import "./app.css";
 import { ApplicationContext } from "./applicationContext";
 import { useLoading } from "./lib/useLoading";
 import {
