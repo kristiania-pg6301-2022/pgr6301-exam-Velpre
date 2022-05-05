@@ -19,15 +19,20 @@ export function EditFrontpage({ user, reload }) {
             </div>
         );
     }
+
+    if (!user || Object.keys(user).length === 0){
+        return <h1>You need to log in</h1>
+    }
+
     return (
-        <div>
-            <EditorUpdate data={data} user={user}/>
+        <div className="edit-frontpage">
+            <EditorUpdate data={data} user={user} reload={reload}/>
             <EditorDelete data={data} reload={reload} user={user} />
         </div>
     );
 }
 
-function EditorUpdate({user, data}) {
+function EditorUpdate({user, data, reload}) {
     const navigate = useNavigate();
     const { updateArticle } = useContext(ApplicationContext);
     const [title, setTitle] = useState("");
@@ -44,6 +49,7 @@ function EditorUpdate({user, data}) {
         setTitle("");
         setCategory("");
         setPlot("");
+        reload()
         navigate("/")
     }
 
@@ -69,7 +75,8 @@ function EditorUpdate({user, data}) {
                     <div>
                         <strong>Choose Category:</strong>
                     </div>
-                    <select  onChange={(e) => setCategory(e.target.value)}>
+                    <select required onChange={(e) => setCategory(e.target.value)}>
+                        <option value="" selected></option>
                         <option value={"General"}>General</option>
                         <option value={"Local"}>Local</option>
                         <option value={"Aboard"}>Aboard</option>
@@ -125,6 +132,7 @@ function EditorDelete({reload, user, data}) {
                 <label>
                     <strong>Delete Article:</strong>
                     <select required onChange={(e) => setTitle(e.target.value)}>
+                        <option value="" selected></option>
                         {data.map((article, index) => (
                             <option key={index} value={article.title}>{article.title}</option>
                         ))

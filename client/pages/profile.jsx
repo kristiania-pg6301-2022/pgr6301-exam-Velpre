@@ -11,8 +11,8 @@ export function Profile({ user, reload, logout }) {
 
   return (
     <div className="profile">
-        <h1>Profile</h1>
-      {user.google ? (
+        <h1>{!user ? "Profile" : "You are not loged in"}</h1>
+      {user.google && (
         <div>
           <h1>
             User profile: {user.google.name} ({user.google.email})
@@ -22,13 +22,18 @@ export function Profile({ user, reload, logout }) {
             alt={user.google.name + " profile picture"}
           />
         </div>
-      ) : (
-        <h1>
-          User profile: {user.hk.name} ({user.hk.email})
-        </h1>
       )}
+
+      {user.hk && (
+          <h1>
+              User profile: {user.hk.name} ({user.hk.email})
+          </h1>
+      )}
+
       <div>
-        <button className="btn" onClick={handleLogout}>Log out</button>
+        <button className="btn" onClick={handleLogout}>
+            {!user ? "Log out" : "Back"}
+        </button>
       </div>
     </div>
   );

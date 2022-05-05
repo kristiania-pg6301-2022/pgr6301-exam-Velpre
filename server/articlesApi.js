@@ -21,6 +21,7 @@ export function ArticlesApi(mongoDatabase) {
   router.post("/new", async (req, res) => {
     const { title, plot, category, author } = req.body;
     let checker = false;
+    console.log(articles)
     articles.map((a) => {
       if (a.title == title) {
         checker = true;
@@ -48,7 +49,6 @@ export function ArticlesApi(mongoDatabase) {
 
   router.post("/update", async (req, res) => {
     const { title, category, plot, author, articleToUpdate } = req.body;
-    console.log(req.body)
     const updates = { title, category, plot, author };
     mongoDatabase
       .collection("articel")

@@ -113,11 +113,12 @@ export function EditorAdd({handleNewArticle, user, reload}) {
           <div>
             <strong>Category:</strong>
           </div>
-          <select  onChange={(e) => setCategory(e.target.value)}>
-            <option value={"General"}>General</option>
-            <option value={"Local"}>Local</option>
-            <option value={"Aboard"}>Aboard</option>
-          </select>
+            <select required onChange={(e) => setCategory(e.target.value)}>
+                <option value="" selected></option>
+                <option value={"General"}>General</option>
+                <option value={"Local"}>Local</option>
+                <option value={"Aboard"}>Aboard</option>
+            </select>
         </label>
       </div>
       <div>

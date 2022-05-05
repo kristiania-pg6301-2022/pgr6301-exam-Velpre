@@ -18,6 +18,11 @@ header {
     justify-content: space-around;
 }
 
+.edit-frontpage{
+    display: flex;
+    justify-content: space-around;
+}
+
 .list-articles-frontpage-loged h1{
     text-align: center;
 }
