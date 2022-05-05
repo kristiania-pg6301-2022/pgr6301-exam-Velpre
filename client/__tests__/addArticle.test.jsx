@@ -6,8 +6,9 @@ import { EditorAdd } from "../frontPage";
 
 describe("add article", () => {
   it("shows article form", () => {
+    const user = {hk:{name:"test", pic:"test"}}
     const element = document.createElement("div");
-    ReactDOM.render(<EditorAdd />, element);
+    ReactDOM.render(<EditorAdd user={user} />, element);
     expect(element.innerHTML).toMatchSnapshot();
     expect(
       Array.from(element.querySelectorAll("form label strong")).map(
@@ -18,12 +19,13 @@ describe("add article", () => {
   });
 
   it("adds Articles on submit", () => {
+    const user = {hk:{name:"test", pic:"test"}}
     const createArticle = jest.fn();
     const handleNewArticle = jest.fn();
     const element = document.createElement("div");
     ReactDOM.render(
       <ApplicationContext.Provider value={{ createArticle, handleNewArticle }}>
-        <EditorAdd handleNewArticle={handleNewArticle} />
+        <EditorAdd user={user} handleNewArticle={handleNewArticle} />
       </ApplicationContext.Provider>,
       element
     );
@@ -40,6 +42,7 @@ describe("add article", () => {
       category: "General",
       title: "Article title",
       plot: "",
+      author:"test"
     });
   });
 });

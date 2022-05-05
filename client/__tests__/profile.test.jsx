@@ -23,7 +23,7 @@ describe("Profile compoent", () => {
       element
     );
 
-    expect(element.querySelector("h1").innerHTML).toEqual("Profile");
+    expect(element.querySelector("h1").innerHTML).toEqual("You are not loged in");
     expect(element.innerHTML).toMatchSnapshot();
   });
 });
