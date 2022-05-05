@@ -3,27 +3,13 @@ import { useLoading } from "./lib/useLoading";
 import { ApplicationContext } from "./applicationContext";
 
 export function FrontPage({ user, reload, articles, handleNewArticle }) {
-  return (
-    <div>
-      <ListArticles articles={articles} user={user} />
-      {user.hk && (
-        <div className="front-page-editor">
-          <EditorAdd handleNewArticle={handleNewArticle}/>
-          <EditorDelete reload={reload} />
-        </div>
-      )}
-    </div>
-  );
-}
-
-export function ListArticles({ user, articles }) {
-    const {listArticles} = useContext(ApplicationContext);
-    const [chosenArticle, setChosenArticle] = useState("");
-    const {loading, error, data} = useLoading(async () => listArticles(), []);
+    const { listArticles } = useContext(ApplicationContext);
+    const { loading, error, data } = useLoading(async () => listArticles(), []);
 
     if (loading) {
         return <div>Loading...</div>;
     }
+
     if (error) {
         return (
             <div>
@@ -32,8 +18,21 @@ export function ListArticles({ user, articles }) {
             </div>
         );
     }
+  return (
+    <div>
+      <ListArticles data={data} articles={articles} user={user} />
+      {user.hk && (
+        <div className="front-page-editor">
+          <EditorAdd user={user} handleNewArticle={handleNewArticle} reload={reload}/>
+        </div>
+      )}
+    </div>
+  );
+}
 
-    console.log(articles)
+
+export function ListArticles({ user, articles, data }) {
+    const [chosenArticle, setChosenArticle] = useState("");
 
     const handleClick = (article) => {
         setChosenArticle(article);
@@ -67,12 +66,11 @@ export function ListArticles({ user, articles }) {
             </div>
         );
     }
-
     return (
         <div className="list-articles-frontpage">
             <h1>Our Articles</h1>
             {data.map((article, index) => (
-                <div>
+                <div key={index}>
                     <h3>{article.title}</h3>
                 </div>
             ))}
@@ -86,24 +84,25 @@ function ArticleCard({ article }) {
       <h1>{article.title}</h1>
       <p>Category: {article.category}</p>
       <p>Plot: {article.plot}</p>
+        <p>Author: {article.author}</p>
     </div>
   );
 }
 
-export function EditorAdd({handleNewArticle}) {
+export function EditorAdd({handleNewArticle, user, reload}) {
   const { createArticle } = useContext(ApplicationContext);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [plot, setPlot] = useState("");
+  const [author, setAuthor] = useState(user.hk.name);
 
   async function handleSubmit(e) {
     e.preventDefault();
     handleNewArticle({title,category,plot})
-    await createArticle({title, category, plot});
+    await createArticle({title, category, plot, author});
     setTitle("");
     setCategory("");
     setPlot("");
-
   }
 
   return (
@@ -114,7 +113,7 @@ export function EditorAdd({handleNewArticle}) {
           <div>
             <strong>Category:</strong>
           </div>
-          <select required onChange={(e) => setCategory(e.target.value)}>
+          <select  onChange={(e) => setCategory(e.target.value)}>
             <option value={"General"}>General</option>
             <option value={"Local"}>Local</option>
             <option value={"Aboard"}>Aboard</option>
@@ -151,111 +150,4 @@ export function EditorAdd({handleNewArticle}) {
   );
 }
 
-export function EditorDelete({reload}) {
-  const { deleteArticle, listArticles } = useContext(ApplicationContext);
-  const { loading, error, data } = useLoading(async () => listArticles(), []);
-  const [title, setTitle] = useState("");
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return (
-        <div>
-          <h1>Error</h1>
-          <div id="error-text">{error.toString()}</div>
-        </div>
-    );
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    deleteArticle({ title});
-    setTitle("");
-    reload()
-  }
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <h1>Delete Article</h1>
-      <div>
-        <label>
-            <strong>Delete Article:</strong>
-          <select required onChange={(e) => setTitle(e.target.value)}>
-            {data.map((article, index) => (
-                  <option key={index} value={article.title}>{article.title}</option>
-            ))
-            }
-          </select>
-        </label>
-      </div>
-      <button>Delete</button>
-    </form>
-  );
-}
-
-
-/*
-function EditorUpdate() {
-  const { updateArticle } = useContext(ApplicationContext);
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [plot, setPlot] = useState("");
-
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    updateArticle({ title, category, plot });
-
-    setTitle("");
-    setCategory("");
-    setPlot("");
-  }
-
-  return (
-      <form onSubmit={handleSubmit}>
-        <h1>Add Article</h1>
-        <div>
-          <label>
-            <div>
-              <strong>Category:</strong>
-            </div>
-            <select required onChange={(e) => setCategory(e.target.value)}>
-              <option value={"General"}>General</option>
-              <option value={"Local"}>Local</option>
-              <option value={"Aboard"}>Aboard</option>
-            </select>
-          </label>
-        </div>
-        <div>
-          <label>
-            <div>
-              <strong>Title:</strong>
-            </div>
-            <input
-                required
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            <div>
-              <strong>Plot:</strong>
-            </div>
-            <textarea
-                required
-                value={plot}
-                onChange={(e) => setPlot(e.target.value)}
-            />
-          </label>
-        </div>
-
-        <button>Submit</button>
-      </form>
-  );
-}
-
- */

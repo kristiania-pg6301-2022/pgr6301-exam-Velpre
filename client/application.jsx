@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ApplicationContext } from "./applicationContext";
 import { useLoading } from "./lib/useLoading";
 import {
@@ -12,6 +12,7 @@ import { LoginCallback } from "./pages/loginFrontpage";
 import { LoginFrontPage } from "./pages/loginFrontpage";
 import { Profile } from "./pages/profile";
 import { FrontPage } from "./frontPage";
+import {EditFrontpage} from "./editFrontpage";
 
 function LoginActions({ user, logout, reload }) {
   const navigate = useNavigate();
@@ -31,11 +32,16 @@ function LoginActions({ user, logout, reload }) {
     navigate("/login");
   }
 
+  function navigateEdit() {
+    navigate("/edit");
+  }
+
   return (
     <>
       <button className="btn" onClick={() => navigateProfile()}>
         {user.google?.name ? `User profile` : `Editor profile`}
       </button>
+      {user.hk && (<button className="btn" onClick={() => navigateEdit()}>Edit Articles</button>)}
       <button
         className="btn"
         onClick={async () => await logout("/api/login", reload, navigate)}
@@ -45,27 +51,24 @@ function LoginActions({ user, logout, reload }) {
     </>
   );
 }
-//Array for WS
-const initialMessages = [];
 
 export function Application() {
-    //Websockets
-    const [articles, setArticles] = useState(initialMessages);
-    const [ws, setWs] = useState();
+  //Websockets
+  const [articles, setArticles] = useState([]);
+  const [ws, setWs] = useState();
 
-    useEffect(() => {
-        const ws = new WebSocket(window.location.origin.replace(/^http/, "ws"));
-        ws.onmessage = (event) => {
-            const {title, plot, category} = JSON.parse(event.data);
-            setArticles((articles) => [...articles, { title, category, plot }]);
-        };
-        setWs(ws);
-    }, []);
+  useEffect(() => {
+    const ws = new WebSocket(window.location.origin.replace(/^http/, "ws"));
+    ws.onmessage = (event) => {
+      const { title, plot, category } = JSON.parse(event.data);
+      setArticles((articles) => [...articles, { title, category, plot }]);
+    };
+    setWs(ws);
+  }, []);
 
-
-    function handleNewArticle(articles) {
-        ws.send(JSON.stringify(articles));
-    }
+  function handleNewArticle(articles) {
+    ws.send(JSON.stringify(articles));
+  }
 
   //Server
   const { fetchLogin, logout } = useContext(ApplicationContext);
@@ -88,7 +91,14 @@ export function Application() {
       <Routes>
         <Route
           path={"/"}
-          element={<FrontPage handleNewArticle={handleNewArticle} articles={articles} user={data.user} reload={reload} />}
+          element={
+            <FrontPage
+              handleNewArticle={handleNewArticle}
+              articles={articles}
+              user={data.user}
+              reload={reload}
+            />
+          }
         />
         <Route
           path={"/login/*"}
@@ -104,6 +114,13 @@ export function Application() {
           element={
             <Profile user={data?.user} reload={reload} logout={logout} />
           }
+        />
+
+        <Route
+            path={"/edit"}
+            element={
+              <EditFrontpage user={data?.user} reload={reload}/>
+            }
         />
       </Routes>
     </BrowserRouter>

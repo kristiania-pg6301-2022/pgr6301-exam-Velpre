@@ -22,8 +22,8 @@ describe("add article", () => {
     const handleNewArticle = jest.fn();
     const element = document.createElement("div");
     ReactDOM.render(
-      <ApplicationContext.Provider value={{ createArticle, handleNewArticle}}>
-        <EditorAdd handleNewArticle={handleNewArticle}/>
+      <ApplicationContext.Provider value={{ createArticle, handleNewArticle }}>
+        <EditorAdd handleNewArticle={handleNewArticle} />
       </ApplicationContext.Provider>,
       element
     );

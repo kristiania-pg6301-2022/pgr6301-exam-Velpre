@@ -19,7 +19,7 @@ export function ArticlesApi(mongoDatabase) {
   });
 
   router.post("/new", async (req, res) => {
-    const { title, plot, category } = req.body;
+    const { title, plot, category, author } = req.body;
     let checker = false;
     articles.map((a) => {
       if (a.title == title) {
@@ -28,7 +28,9 @@ export function ArticlesApi(mongoDatabase) {
       }
     });
     if (!checker) {
-      mongoDatabase.collection("articel").insertOne({ title, plot, category });
+      mongoDatabase
+        .collection("articel")
+        .insertOne({ title, plot, category, author });
       res.sendStatus(204);
     }
   });
@@ -37,39 +39,23 @@ export function ArticlesApi(mongoDatabase) {
     const { title } = req.body;
 
     const query = { title: title };
-    mongoDatabase.collection("articel").deleteOne(query)
-        .then(result => console.log(`Deleted ${result.deletedCount} item.`))
-        .catch(err => console.error(`Delete failed with error: ${err}`))
-});
-/*
-  router.post("/update", async (req, res) => {
-    const { category, title, author } = req.body;
-    const query = { title: title };
-
-    const update = {
-      "$push": {
-        "title": {
-          "title": title
-        }
-      }
-    };
-
-    const options = { "upsert": false };
-
-    mongoDatabase.collection("articel").updateOne(query, update, options)
-        .then(result => {
-          const { matchedCount, modifiedCount } = result;
-          if(matchedCount && modifiedCount) {
-            console.log(`Successfully added a new review.`)
-          }
-        })
-        .catch(err => console.error(`Failed to add review: ${err}`))
-
+    mongoDatabase
+      .collection("articel")
+      .deleteOne(query)
+      .then((result) => console.log(`Deleted ${result.deletedCount} item.`))
+      .catch((err) => console.error(`Delete failed with error: ${err}`));
   });
 
- */
-
-
+  router.post("/update", async (req, res) => {
+    const { title, category, plot, author, articleToUpdate } = req.body;
+    console.log(req.body)
+    const updates = { title, category, plot, author };
+    mongoDatabase
+      .collection("articel")
+      .updateOne({ title: articleToUpdate }, { $set: updates })
+      .then((result) => console.log(`Updated ${result.updated} item.`))
+      .catch((err) => console.error(`update failed with error: ${err}`));
+  });
 
   return router;
 }

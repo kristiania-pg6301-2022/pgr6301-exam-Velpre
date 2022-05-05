@@ -32,20 +32,12 @@ app.use((req, res, next) => {
   }
 });
 
-
 const wsServer = new WebSocketServer({ noServer: true });
 
 const sockets = [];
 
 wsServer.on("connect", (socket) => {
   sockets.push(socket);
-
-  /*
-  setTimeout(() => {
-    socket.send(JSON.stringify({title: "server titel" }));
-  }, 1000);
-
-   */
 
   socket.on("message", (message) => {
     for (const recipient of sockets) {

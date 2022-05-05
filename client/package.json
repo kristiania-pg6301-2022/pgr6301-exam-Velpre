@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "dev": "parcel watch index.html",
     "clean": "rimraf dist .parcel-cache",
     "build": "npm install --include=dev && npm run build:parcel",
