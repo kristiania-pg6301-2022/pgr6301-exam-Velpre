@@ -1,6 +1,6 @@
 # PG6301 eksamen <tittel på løsningen>
 
-[Heroku](link til heroku)
+Heroku: https://eksamen2022.herokuapp.com/
 [Test rapport](link til testrapport)
 
 ## Tips
