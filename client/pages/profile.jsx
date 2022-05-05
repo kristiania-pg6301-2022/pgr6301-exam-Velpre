@@ -11,7 +11,7 @@ export function Profile({ user, reload, logout }) {
 
   return (
     <div className="profile">
-        <h1>{!user ? "Profile" : "You are not loged in"}</h1>
+        <h1>{user.google || user.hk ? "Profile" : "You are not loged in"}</h1>
       {user.google && (
         <div>
           <h1>
