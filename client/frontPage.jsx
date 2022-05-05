@@ -2,73 +2,82 @@ import React, { useState, useContext } from "react";
 import { useLoading } from "./lib/useLoading";
 import { ApplicationContext } from "./applicationContext";
 
-export function FrontPage({ user, reload }) {
+export function FrontPage({ user, reload, articles, handleNewArticle }) {
   return (
     <div>
-      <ListArticles user={user} />
+      <ListArticles articles={articles} user={user} />
       {user.hk && (
         <div className="front-page-editor">
-          <EditorAdd />
-          <EditorUpdate />
-          <EditorDelete />
+          <EditorAdd handleNewArticle={handleNewArticle}/>
+          <EditorDelete reload={reload} />
         </div>
       )}
     </div>
   );
 }
 
-export function ListArticles({ user }) {
-  const { listArticles } = useContext(ApplicationContext);
-  const [chosenArticle, setChosenArticle] = useState("");
+export function ListArticles({ user, articles }) {
+    const {listArticles} = useContext(ApplicationContext);
+    const [chosenArticle, setChosenArticle] = useState("");
+    const {loading, error, data} = useLoading(async () => listArticles(), []);
 
-  const { loading, error, data } = useLoading(async () => listArticles(), []);
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    if (error) {
+        return (
+            <div>
+                <h1>Error</h1>
+                <div id="error-text">{error.toString()}</div>
+            </div>
+        );
+    }
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
+    console.log(articles)
+
+    const handleClick = (article) => {
+        setChosenArticle(article);
+    };
+
+    if (user.google || user.hk) {
+        return (
+            <div className="list-articles-frontpage-loged">
+                <h1>Our Articles</h1>
+                <div className="grid-split-frontpage">
+                    <div>
+                        {data.map((article, index) => (
+                            <div key={index}>
+                                <button onClick={() => handleClick(article)}>
+                                    {article.title}
+                                </button>
+                            </div>
+                        ))}
+
+                        {articles.map((article, index) => (
+                            <div key={index}>
+                                <button onClick={() => handleClick(article)}>
+                                    {article.title}
+                                </button>
+                            </div>
+                        ))}
+
+                    </div>
+                    <div>{chosenArticle && <ArticleCard article={chosenArticle}/>}</div>
+                </div>
+            </div>
+        );
+    }
+
     return (
-      <div>
-        <h1>Error</h1>
-        <div id="error-text">{error.toString()}</div>
-      </div>
-    );
-  }
-
-  const handleClick = (article) => {
-    setChosenArticle(article);
-  };
-
-  if (user.google || user.hk) {
-    return (
-      <div className="list-articles-frontpage-loged">
-        <h1>Our Articles</h1>
-        <div className="grid-split-frontpage">
-          <div>
+        <div className="list-articles-frontpage">
+            <h1>Our Articles</h1>
             {data.map((article, index) => (
-              <div key={index}>
-                <button onClick={() => handleClick(article)}>
-                  {article.title}
-                </button>
-              </div>
+                <div>
+                    <h3>{article.title}</h3>
+                </div>
             ))}
-          </div>
-          <div>{chosenArticle && <ArticleCard article={chosenArticle} />}</div>
         </div>
-      </div>
     );
-  }
-
-  return (
-    <div className="list-articles-frontpage">
-      <h1>Our Articles</h1>
-      {data.map((article, index) => (
-        <div>
-          <h3>{article.title}</h3>
-        </div>
-      ))}
-    </div>
-  );
 }
 
 function ArticleCard({ article }) {
@@ -81,7 +90,7 @@ function ArticleCard({ article }) {
   );
 }
 
-export function EditorAdd() {
+export function EditorAdd({handleNewArticle}) {
   const { createArticle } = useContext(ApplicationContext);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -89,11 +98,12 @@ export function EditorAdd() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(category)
-    createArticle({ title, category, plot });
+    handleNewArticle({title,category,plot})
+    await createArticle({title, category, plot});
     setTitle("");
     setCategory("");
     setPlot("");
+
   }
 
   return (
@@ -141,7 +151,7 @@ export function EditorAdd() {
   );
 }
 
-function EditorDelete() {
+export function EditorDelete({reload}) {
   const { deleteArticle, listArticles } = useContext(ApplicationContext);
   const { loading, error, data } = useLoading(async () => listArticles(), []);
   const [title, setTitle] = useState("");
@@ -163,6 +173,7 @@ function EditorDelete() {
     e.preventDefault();
     deleteArticle({ title});
     setTitle("");
+    reload()
   }
 
   return (
@@ -184,6 +195,8 @@ function EditorDelete() {
   );
 }
 
+
+/*
 function EditorUpdate() {
   const { updateArticle } = useContext(ApplicationContext);
   const [title, setTitle] = useState("");
@@ -244,3 +257,5 @@ function EditorUpdate() {
       </form>
   );
 }
+
+ */

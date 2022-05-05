@@ -32,6 +32,34 @@ app.use((req, res, next) => {
   }
 });
 
+
+const wsServer = new WebSocketServer({ noServer: true });
+
+const sockets = [];
+
+wsServer.on("connect", (socket) => {
+  sockets.push(socket);
+
+  /*
+  setTimeout(() => {
+    socket.send(JSON.stringify({title: "server titel" }));
+  }, 1000);
+
+   */
+
+  socket.on("message", (message) => {
+    for (const recipient of sockets) {
+      recipient.send(message.toString());
+    }
+  });
+});
+
 const server = app.listen(process.env.PORT || 3001, () => {
   console.log(`Started on http://localhost:${server.address().port}`);
+  //Websockets
+  server.on("upgrade", (req, socket, head) => {
+    wsServer.handleUpgrade(req, socket, head, (socket) => {
+      wsServer.emit("connect", socket, req);
+    });
+  });
 });

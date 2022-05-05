@@ -41,7 +41,7 @@ export function ArticlesApi(mongoDatabase) {
         .then(result => console.log(`Deleted ${result.deletedCount} item.`))
         .catch(err => console.error(`Delete failed with error: ${err}`))
 });
-
+/*
   router.post("/update", async (req, res) => {
     const { category, title, author } = req.body;
     const query = { title: title };
@@ -66,6 +66,8 @@ export function ArticlesApi(mongoDatabase) {
         .catch(err => console.error(`Failed to add review: ${err}`))
 
   });
+
+ */
 
 
 
