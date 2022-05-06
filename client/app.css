@@ -1,0 +1,86 @@
+
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: lightblue;
+}
+header {
+    background-color: lightblue;
+    padding: 1.5%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 10px solid black;
+}
+
+.front-page-editor{
+    margin-top: 10%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.edit-frontpage{
+    display: flex;
+    justify-content: space-around;
+}
+
+.list-articles-frontpage-loged h1{
+    text-align: center;
+}
+.list-articles-frontpage{
+    text-align: center;
+}
+.grid-split-frontpage{
+    display: flex;
+    justify-content: space-around;
+    background-color: lightblue;
+    margin-top: 10%;
+}
+
+.grid-split-frontpage button{
+    margin: 5%;
+    width: 100%;
+    background-color: beige;
+}
+
+.login-frontpage{
+    background-color: lightblue;
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.login-frontpage h1{
+    margin: 0;
+
+}
+
+.login-frontpage button{
+    width: 400px;
+    height: 100px;
+    background-color: beige;
+}
+
+.btn{
+    background-color: beige;
+    width: 100px;
+    height: 30px;
+}
+
+.profile{
+    background-color: lightblue;
+    height: 100vh;
+    text-align: center;
+    padding-top: 5%;
+}
+.profile h1{
+    margin: 0;
+    margin-bottom: 5%;
+}
+
+.profile button{
+    margin-top: 5%;
+}
+
