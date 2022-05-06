@@ -5,7 +5,7 @@
 <img width="581" alt="image" src="https://user-images.githubusercontent.com/65472724/167040184-967be4bb-5dbc-4f5c-a8d6-c588bbae42ee.png">
 
 
-## Egenutfylling av funksjonelle krav
+## Funksjonelle krav
 
 * [x]  Anonyme brukere skal se nyhetsaker når de kommer til nettsiden. Legg inn noen nyhetssaker for å demonstrere
 * [x]  Når en ny sak publiseres, skal alle brukerne få se den nye saken umiddelbart. Bruk websockets for å sende oppdateringer
@@ -28,7 +28,24 @@ feilmelding
    * Dette har jeg ikke rukket. Ser for meg at det kunne enkelt løses ved å sammenligne user.name med author på article. Kunne mappe over articles som ble publisert av den useren som er logget inn og liste bare de articles som matcher søke sånn at brukeren får mulighet å bare endre de articles som han selv har publisert. Men rakk ikke å implementere det.
 * [x] * Alle feil fra serves skal presenteres til bruker på en pen måte, med mulighet for brukeren til å prøve igjen
 
-
+## Bør-krav til teknisk løsning
+* [x] *Brukeren ser kun menyvalg som de har tilgang til
+* [x] *Brukere som går til en side de ikke har tilgang til blir bedt om å logge inn
+* [x] *Brukere bør alltid se listen over artikler når de navigerer seg rundt på sidene
+      * Dette ser de nesten alltid. Det er bare endrings funksjonaliteten som er på egen side.
+  
+## Må-krav til teknisk løsning
+* [x] *Besvarelsen skal inneholde en README-fil med link til Heroku og test coverage
+* [x] *npm start skal starte server og klient. Concurrently og parcel anbefales
+* [x] *npm test skal kjøre tester. Testene skal ikke feile
+* [x] *Koden skal ha konsistent formattering. Prettier og Husky anbefales
+* [x] *Nettsidene skal ha god layout med CSS Grid (Holy Grail layout) og horisontal navigasjonsmeny. Brukeren må kunne
+        navigere overalt uten å bruke "back" eller redigere URL
+ * [x] *Serveren validerer at brukeren er logget inn
+ * [x] *Innleveringen skal være i form av en ZIP-fil. Maks størrelse på fila er 1MB
+ * [x] *Artikler skal lagres i MongoDB
+ * [x] *Applikasjonen skal deployes til Heroku
+ * [x] *Testene skal kjøre på Github Actions  
 ## Egenutfylling av tekniske krav
 
 * [x] Oppsett av package.json, parcel, express, prettier
