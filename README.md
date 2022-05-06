@@ -1,4 +1,4 @@
-# PG6301 eksamen <tittel på løsningen>
+# PG6301 eksamen
 
 * Heroku: https://eksamen2022.herokuapp.com/
 * Test coverage: https://github.com/kristiania-pg6301-2022/pgr6301-exam-Velpre/commit/0b73238abdf9782a3cda2d696375e2f70a57b1f8#comments
